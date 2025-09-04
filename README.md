@@ -4,3 +4,6 @@
       {
         "modbusType": 1
       }
+
+# 打包方案
+     pyinstaller -F main.py

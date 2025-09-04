@@ -89,7 +89,6 @@ def upload_file():
     gatewayType = request.form.get('gatewayType')
 
     # 如果数据表不存在就创建数据表
-    # 如果数据表不存在就创建数据表
     sQLiteDatabase = SQLiteDatabase()
     sQLiteDatabase.connect()
     result = sQLiteDatabase.table_exists_method1("orders")
@@ -97,9 +96,13 @@ def upload_file():
         # 如果不存在就要创建表
         sQLiteDatabase.create_tables()
 
-
-
-
+    # 插入数据
+    # sQLiteDatabase.insertSql();
+    # return jsonify({
+    #     'message': 'File successfully uploaded',
+    #     'filename': filename,
+    #     'saved_path': file_path
+    # }), 200
 
     # 如果文件存在且扩展名被允许
     if file and allowed_file(filename=file.filename):
@@ -128,10 +131,15 @@ def allowed_file(filename):
 
 
 # 文件配置回显（展示）
-
-
-
-
+@app.route('/file/detail', methods=['POST'])
+def file_detail():
+    # 查询数据表
+    sQLiteDatabase = SQLiteDatabase()
+    with sQLiteDatabase.connect() as conn:
+        cursor = conn.cursor()
+        cursor.execute("SELECT * FROM users")
+        users = cursor.fetchall()
+    return users
 
 
 
